@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -16,14 +17,17 @@ void readStudentsData(StudentType students[], int count) {
     for (int i = 0; i < count; i++) {
         cout << "Enter first name of student " << (i + 1) << ": ";
         cin >> students[i].studentFName;
-        cout << "Enter first name of student " << (i + 1) << ": ";
+        cout << "Enter last name of student " << (i + 1) << ": ";
         cin >> students[i].studentLName;
         cout << "Enter test score (0-100) " << students[i].studentFName << " " << students[i].studentLName << ": ";
         cin >> students[i].testScore;
 
         
-        while (students[i].testScore < 0 || students[i].testScore > 100) {
-            cout << "The test score is invalid ";
+        while (cin.fail() || students[i].testScore < 0 || students[i].testScore > 100) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            
+            cout << "The test score is invalid. Please enter a score between 0 and 100: ";
             cin >> students[i].testScore;
         }
     }
